@@ -1,0 +1,587 @@
+---
+title: "AIG_Interview_Excel_Test"
+author: "Minghao Liu"
+date: "12/20/2019"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r echo=FALSE}
+data_19q3 <- read.csv('/Users/AncelotLiu/Downloads/19Q3.csv')
+data_19q4 <- read.csv('/Users/AncelotLiu/Downloads/19Q4.csv')
+
+```
+
+
+# Germany
+
+```{r echo=FALSE}
+loss_19q3_Germany <- matrix(nrow = 4, ncol = 17)
+loss_19q3_Germany <- as.data.frame(loss_19q3_Germany)
+loss_19q3_Germany[is.na(loss_19q3_Germany)] <- 0
+
+#loss_19q3_Germany
+
+```
+
+```{r echo=FALSE}
+loss_19q4_Germany <- matrix(nrow = 4, ncol = 17)
+loss_19q4_Germany <- as.data.frame(loss_19q4_Germany)
+loss_19q4_Germany[is.na(loss_19q4_Germany)] <- 0
+
+#loss_19q4_Germany
+
+```
+
+```{r echo=FALSE}
+dev = c("dev3", "dev6", "dev9",  "dev12",  "dev15",  "dev18",  "dev21",  "dev24",  "dev27", "dev30",  "dev33",  "dev36",  "dev39",  "dev42",  "dev45",  "dev48", "dev51")
+lossyear = c("2016","2017", "2018", "2019")
+colnames(loss_19q3_Germany) = dev
+rownames(loss_19q3_Germany) = lossyear
+
+colnames(loss_19q4_Germany) = dev
+rownames(loss_19q4_Germany) = lossyear
+
+
+
+#loss_19q3_Germany
+#loss_19q4_Germany
+
+```
+
+## 2019Q3
+```{r echo=FALSE}
+for(i in 1:dim(loss_19q3_Germany)[1]) {
+  
+  for (j in 1:dim(loss_19q3_Germany)[2]) {
+    
+    logit <- data_19q3[,"countryname"] == "Germany" & data_19q3[,"year_new"] == lossyear[i] & data_19q3[,"X_NAME_"] == "paid"
+    
+    dev_name <- dev[j]
+    
+    loss_19q3_Germany[i,j] <- sum(data_19q3[,dev_name][logit])
+      
+  }
+}
+
+loss_19q3_Germany[is.na(loss_19q3_Germany)] <- 0
+loss_19q3_Germany
+
+```
+
+
+## 2019Q4
+```{r echo=FALSE}
+for(i in 1:dim(loss_19q4_Germany)[1]) {
+  
+  for (j in 1:dim(loss_19q4_Germany)[2]) {
+    
+    logit <- data_19q4[,"countryname"] == "Germany" & data_19q4[,"year_new"] == lossyear[i] & data_19q4[,"X_NAME_"] == "paid"
+    
+    dev_name <- dev[j]
+    
+    loss_19q4_Germany[i,j] <- sum(data_19q4[,dev_name][logit])
+    
+  }
+}
+
+loss_19q4_Germany[is.na(loss_19q4_Germany)] <- 0
+loss_19q4_Germany
+
+```
+
+## Recon
+```{r echo=FALSE}
+
+recon_Germany <- loss_19q4_Germany - loss_19q3_Germany
+
+recon_Germany[1,16] = 0
+recon_Germany[2,12] = 0
+recon_Germany[3,8] = 0
+recon_Germany[4,4] = 0
+
+recon_Germany
+
+sum(recon_Germany)
+```
+
+```{r echo=FALSE}
+result_19q3_Germany <- as.data.frame(matrix(nrow = 4, ncol = 1))
+result_19q4_Germany <- as.data.frame(matrix(nrow = 4, ncol = 1))
+
+result_19q3_Germany[1,1] <- loss_19q3_Germany[1,15]
+result_19q3_Germany[2,1] <- loss_19q3_Germany[2,11]
+result_19q3_Germany[3,1] <- loss_19q3_Germany[3,7]
+result_19q3_Germany[4,1] <- loss_19q3_Germany[4,3]
+
+row.names(result_19q3_Germany) <- lossyear
+colnames(result_19q3_Germany) <- '2019Q3'
+
+result_19q3_Germany
+
+```
+
+```{r echo=FALSE}
+
+result_19q4_Germany[1,1] <- loss_19q4_Germany[1,15]
+result_19q4_Germany[2,1] <- loss_19q4_Germany[2,11]
+result_19q4_Germany[3,1] <- loss_19q4_Germany[3,7]
+result_19q4_Germany[4,1] <- loss_19q4_Germany[4,3]
+
+row.names(result_19q4_Germany) <- lossyear
+colnames(result_19q4_Germany) <- '2019Q4'
+
+result_19q4_Germany
+```
+
+### The result for Germany Reconciliation
+
+```{r echo=FALSE}
+recon_Germany_result_19 <- result_19q4_Germany - result_19q3_Germany
+colnames(recon_Germany_result_19) <- 'Difference'
+recon_Germany_result_19
+
+
+sum(recon_Germany_result_19)
+
+```
+
+
+# France
+
+```{r echo=FALSE}
+loss_19q3_France <- matrix(nrow = 4, ncol = 17)
+loss_19q3_France <- as.data.frame(loss_19q3_France)
+loss_19q3_France[is.na(loss_19q3_France)] <- 0
+
+#loss_19q3_France
+
+```
+
+```{r echo=FALSE}
+loss_19q4_France <- matrix(nrow = 4, ncol = 17)
+loss_19q4_France <- as.data.frame(loss_19q4_France)
+loss_19q4_France[is.na(loss_19q4_France)] <- 0
+
+#loss_19q4_France
+
+```
+
+```{r echo=FALSE}
+dev = c("dev3", "dev6", "dev9",  "dev12",  "dev15",  "dev18",  "dev21",  "dev24",  "dev27", "dev30",  "dev33",  "dev36",  "dev39",  "dev42",  "dev45",  "dev48", "dev51")
+lossyear = c("2016","2017", "2018", "2019")
+colnames(loss_19q3_France) = dev
+rownames(loss_19q3_France) = lossyear
+
+colnames(loss_19q4_France) = dev
+rownames(loss_19q4_France) = lossyear
+
+
+
+#loss_19q3_France
+#loss_19q4_France
+
+```
+
+## 2019Q3
+```{r echo=FALSE}
+for(i in 1:dim(loss_19q3_France)[1]) {
+  
+  for (j in 1:dim(loss_19q3_France)[2]) {
+    
+    logit <- data_19q3[,"countryname"] == "France" & data_19q3[,"year_new"] == lossyear[i] & data_19q3[,"X_NAME_"] == "paid"
+    
+    dev_name <- dev[j]
+    
+    loss_19q3_France[i,j] <- sum(data_19q3[,dev_name][logit])
+      
+  }
+}
+
+loss_19q3_France[is.na(loss_19q3_France)] <- 0
+loss_19q3_France
+
+```
+## 2019Q4
+```{r echo=FALSE}
+for(i in 1:dim(loss_19q4_France)[1]) {
+  
+  for (j in 1:dim(loss_19q4_France)[2]) {
+    
+    logit <- data_19q4[,"countryname"] == "France" & data_19q4[,"year_new"] == lossyear[i] & data_19q4[,"X_NAME_"] == "paid"
+    
+    dev_name <- dev[j]
+    
+    loss_19q4_France[i,j] <- sum(data_19q4[,dev_name][logit])
+    
+  }
+}
+
+loss_19q4_France[is.na(loss_19q4_France)] <- 0
+loss_19q4_France
+
+```
+
+## Recon
+```{r echo=FALSE}
+
+recon_France <- loss_19q4_France - loss_19q3_France
+
+recon_France[1,16] = 0
+recon_France[2,12] = 0
+recon_France[3,8] = 0
+recon_France[4,4] = 0
+
+recon_France
+
+sum(recon_France)
+```
+
+```{r echo=FALSE}
+result_19q3_France <- as.data.frame(matrix(nrow = 4, ncol = 1))
+result_19q4_France <- as.data.frame(matrix(nrow = 4, ncol = 1))
+
+result_19q3_France[1,1] <- loss_19q3_France[1,15]
+result_19q3_France[2,1] <- loss_19q3_France[2,11]
+result_19q3_France[3,1] <- loss_19q3_France[3,7]
+result_19q3_France[4,1] <- loss_19q3_France[4,3]
+
+row.names(result_19q3_France) <- lossyear
+colnames(result_19q3_France) <- '2019Q3'
+
+result_19q3_France
+
+```
+
+```{r echo=FALSE}
+
+result_19q4_France[1,1] <- loss_19q4_France[1,15]
+result_19q4_France[2,1] <- loss_19q4_France[2,11]
+result_19q4_France[3,1] <- loss_19q4_France[3,7]
+result_19q4_France[4,1] <- loss_19q4_France[4,3]
+
+row.names(result_19q4_France) <- lossyear
+colnames(result_19q4_France) <- '2019Q4'
+
+result_19q4_France
+```
+
+### The result for France Reconciliation
+
+```{r echo=FALSE}
+recon_France_result_19 <- result_19q4_France - result_19q3_France
+colnames(recon_France_result_19) <- 'Difference'
+recon_France_result_19
+
+
+sum(recon_France_result_19)
+
+```
+
+
+
+
+
+# Sweden
+
+```{r echo=FALSE}
+loss_19q3_Sweden <- matrix(nrow = 4, ncol = 17)
+loss_19q3_Sweden <- as.data.frame(loss_19q3_Sweden)
+loss_19q3_Sweden[is.na(loss_19q3_Sweden)] <- 0
+
+#loss_19q3_Sweden
+
+```
+
+```{r echo=FALSE}
+loss_19q4_Sweden <- matrix(nrow = 4, ncol = 17)
+loss_19q4_Sweden <- as.data.frame(loss_19q4_Sweden)
+loss_19q4_Sweden[is.na(loss_19q4_Sweden)] <- 0
+
+#loss_19q4_Sweden
+
+```
+
+```{r echo=FALSE}
+dev = c("dev3", "dev6", "dev9",  "dev12",  "dev15",  "dev18",  "dev21",  "dev24",  "dev27", "dev30",  "dev33",  "dev36",  "dev39",  "dev42",  "dev45",  "dev48", "dev51")
+lossyear = c("2016","2017", "2018", "2019")
+colnames(loss_19q3_Sweden) = dev
+rownames(loss_19q3_Sweden) = lossyear
+
+colnames(loss_19q4_Sweden) = dev
+rownames(loss_19q4_Sweden) = lossyear
+
+
+
+#loss_19q3_Sweden
+#loss_19q4_Sweden
+
+```
+
+## 2019Q3
+```{r echo=FALSE}
+for(i in 1:dim(loss_19q3_Sweden)[1]) {
+  
+  for (j in 1:dim(loss_19q3_Sweden)[2]) {
+    
+    logit <- data_19q3[,"countryname"] == "Sweden" & data_19q3[,"year_new"] == lossyear[i] & data_19q3[,"X_NAME_"] == "paid"
+    
+    dev_name <- dev[j]
+    
+    loss_19q3_Sweden[i,j] <- sum(data_19q3[,dev_name][logit])
+      
+  }
+}
+
+loss_19q3_Sweden[is.na(loss_19q3_Sweden)] <- 0
+loss_19q3_Sweden
+
+```
+## 2019Q4
+```{r echo=FALSE}
+for(i in 1:dim(loss_19q4_Sweden)[1]) {
+  
+  for (j in 1:dim(loss_19q4_Sweden)[2]) {
+    
+    logit <- data_19q4[,"countryname"] == "Sweden" & data_19q4[,"year_new"] == lossyear[i] & data_19q4[,"X_NAME_"] == "paid"
+    
+    dev_name <- dev[j]
+    
+    loss_19q4_Sweden[i,j] <- sum(data_19q4[,dev_name][logit])
+    
+  }
+}
+
+loss_19q4_Sweden[is.na(loss_19q4_Sweden)] <- 0
+loss_19q4_Sweden
+
+```
+## Recon
+```{r echo=FALSE}
+
+recon_Sweden <- loss_19q4_Sweden - loss_19q3_Sweden
+
+recon_Sweden[1,16] = 0
+recon_Sweden[2,12] = 0
+recon_Sweden[3,8] = 0
+recon_Sweden[4,4] = 0
+
+recon_Sweden
+
+sum(recon_Sweden)
+```
+
+```{r echo=FALSE}
+result_19q3_Sweden <- as.data.frame(matrix(nrow = 4, ncol = 1))
+result_19q4_Sweden <- as.data.frame(matrix(nrow = 4, ncol = 1))
+
+result_19q3_Sweden[1,1] <- loss_19q3_Sweden[1,15]
+result_19q3_Sweden[2,1] <- loss_19q3_Sweden[2,11]
+result_19q3_Sweden[3,1] <- loss_19q3_Sweden[3,7]
+result_19q3_Sweden[4,1] <- loss_19q3_Sweden[4,3]
+
+row.names(result_19q3_Sweden) <- lossyear
+colnames(result_19q3_Sweden) <- '2019Q3'
+
+result_19q3_Sweden
+
+```
+
+```{r echo=FALSE}
+
+result_19q4_Sweden[1,1] <- loss_19q4_Sweden[1,15]
+result_19q4_Sweden[2,1] <- loss_19q4_Sweden[2,11]
+result_19q4_Sweden[3,1] <- loss_19q4_Sweden[3,7]
+result_19q4_Sweden[4,1] <- loss_19q4_Sweden[4,3]
+
+row.names(result_19q4_Sweden) <- lossyear
+colnames(result_19q4_Sweden) <- '2019Q4'
+
+result_19q4_Sweden
+```
+
+### The result for Sweden Reconciliation
+
+```{r echo=FALSE}
+recon_Sweden_result_19 <- result_19q4_Sweden - result_19q3_Sweden
+colnames(recon_Sweden_result_19) <- 'Difference'
+recon_Sweden_result_19
+
+
+sum(recon_Sweden_result_19)
+
+```
+
+
+
+# Summary for Reconciliations of Germany, France and Sweden
+
+```{r echo=FALSE}
+recon_summary <- as.data.frame(matrix(nrow = 3, ncol = 2))
+colnames(recon_summary) <- c('Country', 'Recon_Difference')
+
+recon_summary[,1] <- c('Germany', 'France', 'Sweden')
+recon_summary[,2] <- c(sum(recon_Germany_result_19),sum(recon_France_result_19),sum(recon_Sweden_result_19))
+
+recon_summary
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
+```{r echo=FALSE}
+
+
+```
+
